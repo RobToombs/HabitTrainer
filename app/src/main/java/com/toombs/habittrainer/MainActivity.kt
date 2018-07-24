@@ -28,10 +28,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if(item.itemId == R.id.add_habit) {
-            val intent = Intent(this, CreateHabitActivity::class.java)
-            startActivity(intent)
+            switchTo(CreateHabitActivity::class.java)
         }
 
         return true
+    }
+
+    private fun switchTo(c: Class<*>) {
+        val intent = Intent(this, c)
+        startActivity(intent)
     }
 }
