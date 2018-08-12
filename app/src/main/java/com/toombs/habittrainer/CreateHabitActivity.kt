@@ -54,12 +54,13 @@ class CreateHabitActivity : AppCompatActivity() {
             it.write(stream.toByteArray())
         }
 
-        val habit = Habit(title, description, fileName)
+        val habit = Habit(title, description, fileName, -1)
         val id = HabitDbTable(this).store(habit)
 
         if(id == -1L) {
-            displayErrorMessage("Habit could not be storted... let's not make this a habit.")
+            displayErrorMessage("Habit could not be stored... let's not make this a habit.")
         } else {
+            habit.id = id
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }

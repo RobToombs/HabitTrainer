@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import com.toombs.habittrainer.db.HabitDbTable
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -38,5 +40,11 @@ class MainActivity : AppCompatActivity() {
     private fun switchTo(c: Class<*>) {
         val intent = Intent(this, c)
         startActivity(intent)
+    }
+
+    fun deleteHabit(v: View) {
+        val id = v.tag as Long
+        HabitDbTable(this).remove(id)
+        (v.parent.parent as ViewGroup).removeAllViews()
     }
 }

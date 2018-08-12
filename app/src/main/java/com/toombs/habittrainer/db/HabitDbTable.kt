@@ -13,6 +13,22 @@ class HabitDbTable(context: Context) {
 
     private val dbHelper = HabitTrainerDb(context)
 
+    fun remove(id: Long) {
+        val db = dbHelper.writableDatabase
+        val affected = db.transaction {
+            delete(HabitEntry.TABLE_NAME, "${HabitEntry._ID} = $id", null)
+        }
+
+        db.close()
+
+        if(affected > 0) {
+            Log.d(TAG, "Deleted habit from DB")
+        }
+        else {
+            Log.d(TAG, "Not deleted")
+        }
+    }
+
     fun store(habit: Habit): Long
     {
         val db = dbHelper.writableDatabase
@@ -24,7 +40,7 @@ class HabitDbTable(context: Context) {
         }
 
         // Pass a function from this DB to our transaction function that will invoke
-        // all functions from this DB hence the lack of 'it' identifier4
+        // all functions from this DB hence the lack of 'it' identifier
         val id = db.transaction {
             insert(HabitEntry.TABLE_NAME, null, values)
         }
@@ -53,7 +69,8 @@ class HabitDbTable(context: Context) {
             val title = cursor.getString(HabitEntry.TITLE_COL)
             val desc = cursor.getString(HabitEntry.DESCR_COL)
             val filePath = cursor.getString(HabitEntry.FILE_COL)
-            habits.add(Habit(title, desc, filePath))
+            val id = cursor.getLong(cursor.getColumnIndex(HabitEntry._ID))
+            habits.add(Habit(title, desc, filePath, id))
         }
         cursor.close()
         return habits

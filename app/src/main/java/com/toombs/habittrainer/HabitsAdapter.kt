@@ -30,6 +30,7 @@ class HabitsAdapter(val habits: List<Habit>) : RecyclerView.Adapter<HabitsAdapte
                 tv_description.text = habit.description
                 val stream = context.openFileInput(habit.file)
                 iv_icon.setImageBitmap(BitmapFactory.decodeStream(stream))
+                btn_delete.tag = habit.id
             }
         }
     }

@@ -9,4 +9,5 @@
     <string name="eat_an_apple">Eat an apple</string>
     <string name="an_apple">An apple a day keeps the doctor away</string>
     <string name="selected_image">Selected image</string>
+    <string name="close">X</string>
 </resources>
